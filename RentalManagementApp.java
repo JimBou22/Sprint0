@@ -115,6 +115,10 @@ public class RentalManagementApp {
 
 		JMenuItem mntmByZipCode = new JMenuItem("by ZIP Code");
 		mnLookupLocations.add(mntmByZipCode);
+		mntmByZipCode.addActionListener(e -> {
+			//input zipcode, get list of locations
+			locsByZip(locationList);
+		});
 
 		JMenuItem mntmByName = new JMenuItem("by Name");
 		mnLookupLocations.add(mntmByName);
@@ -288,5 +292,25 @@ public class RentalManagementApp {
 			e.printStackTrace();
 		}
 		return new ArrayList<RentalLocations>();
+	}
+		private void locsByZip(List<RentalLocations> list) {
+		int zip = Integer.parseInt(JOptionPane.showInputDialog(frmRentalLocationManager, "Input Zip Code"));
+		updateTable(tblLocations, locationList, zip);
+	}
+	private void updateTable(JTable table, List<RentalLocations> list, int zip) {
+		String[] columns = { "Name", "Zip"};
+		List<String> locs = new ArrayList<>();
+		
+		for (RentalLocations r : list) {
+			locs = r.getLocs(zip, list);
+		}
+		
+		Object[][] data = new Object[locs.size()][2];
+		for (int i = 0; i < locs.size(); i++) {
+			data[i][0] = locs.get(i);
+			data[i][1] = zip;
+		}
+		DefaultTableModel dtm = new DefaultTableModel(data, columns);
+		table.setModel(dtm);
 	}
 }
