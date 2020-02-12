@@ -1,4 +1,4 @@
-package ijs_sprint;
+package ijs_sprint1;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -86,7 +86,7 @@ public class RentalManagementApp {
 		
 		JMenuItem mntmNewLocation = new JMenuItem("New Location");
 		mntmNewLocation.addActionListener(e -> {
-			
+			newLocation(locationList);
 		});
 		mnLocation.add(mntmNewLocation);
 		
@@ -107,17 +107,10 @@ public class RentalManagementApp {
 		
 		JMenuItem mntmByLocationName = new JMenuItem("by Location Name");
 		mnLookupRentalRates.add(mntmByLocationName);
-		mntmNewLocation.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				newLocation(locationList);
-			}
-		});
 		
 		JMenuItem mntmAvailableVehicles = new JMenuItem("Available Vehicles");
-		mntmAvailableVehicles.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-			}
+		mntmAvailableVehicles.addActionListener(e -> {
+			// Do stuff
 		});
 		mnQueries.add(mntmAvailableVehicles);
 		
