@@ -7,7 +7,23 @@ public class RentalLocations {
 	private double dailyRate;
 	private final int vehicles = 50;
 	private int rentedVehicles;
+	private int id;
 	
+	//total vehicles  = 50
+	public RentalLocations(String name, double dailyRate, int rentedVehicles, int id, int zip) {
+		this.name = name;
+		this.dailyRate = dailyRate;
+		this.rentedVehicles = rentedVehicles;
+		this.id = id;
+		this.zip = zip;
+	}
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+
 	private int zip;
 	private double days;
 	/**
@@ -48,7 +64,7 @@ public class RentalLocations {
 	}
 
 	private double discount;
-	private double total;
+
 	
 	
 	
@@ -61,22 +77,49 @@ public class RentalLocations {
 	 */
 		
 	public double getRates(double dailyRate) { 
-		if ((zip >= 98001) && (zip <= 98100)) {
-			dailyRate = 27.50;				
+		if ((days > 0) && (days < 5)) {
+			if ((zip >= 98001) && (zip <= 98100)) {
+				dailyRate = 27.50;				
+			}
+			if ((zip >= 98201) && (zip <= 98300)) {
+				dailyRate = 22.49;
+			}
+			if ((zip >= 98301) && (zip <= 98400)) {
+				dailyRate = 31.00;
+			}
+			if ((zip >= 98401) && (zip <= 98500)) {
+				dailyRate = 12.25;
+			}
 		}
-		if ((zip >= 98201) && (zip <= 98300)) {
-			dailyRate = 22.49;
+		if (days >= 5 ) { // weekly rate
+			if ((zip >= 98000) && (zip <= 99000)) {
+				discount = 0.2;
+				dailyRate = 27.50;				
+				dailyRate = (dailyRate * discount) + dailyRate;
+				
+			}
+			if (zip == 2) {
+				dailyRate = 22.49;
+				discount = 0.2;
+				dailyRate = (dailyRate * discount) + dailyRate;
+			
+			}
+			if (zip == 3) {
+				dailyRate = 31.00;
+				discount = 0.2;
+				dailyRate = (dailyRate * discount) + dailyRate;
+				
+			}
+			if (zip == 4) {
+				dailyRate = 12.25;discount = 0.2;
+				dailyRate = (dailyRate * discount) + dailyRate;
+				
+			}
 		}
-		if ((zip >= 98301) && (zip <= 98400)) {
-			dailyRate = 31.00;
-		}
-		if ((zip >= 98401) && (zip <= 98500)) {
-			dailyRate = 12.25;
-		}
-		total = rentedVehicles * dailyRate;
-		System.out.println("the total daily revenue is: " + NumberFormat.getCurrencyInstance().format(total));
-		return total;
-	}
+		double total = days * dailyRate;
+		System.out.println("the total is: " + NumberFormat.getCurrencyInstance().format(total));
+		return dailyRate;
+//		
 //		}
 	
 	}public int getVehicles() {
