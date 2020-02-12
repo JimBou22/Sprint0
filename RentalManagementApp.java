@@ -1,4 +1,4 @@
-package IJS_Sprint1;
+package ijs_sprint1;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -7,6 +7,12 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,7 +78,20 @@ public class RentalManagementApp {
 
 		JMenu mnFile = new JMenu("File");
 		menuBar.add(mnFile);
-
+		
+		JMenuItem mntmSave = new JMenuItem("Save");
+		mntmSave.addActionListener(e -> {
+			saveData(locationList);
+		});
+		mnFile.add(mntmSave);
+		
+		JMenuItem mntmLoad = new JMenuItem("Load");
+		mntmLoad.addActionListener(e -> {
+			locationList = loadData();
+			updateTable(tblLocations, locationList);
+		});
+		mnFile.add(mntmLoad);
+		
 		JMenuItem mntmExit = new JMenuItem("Exit");
 		mntmExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -115,9 +134,8 @@ public class RentalManagementApp {
 
 		JMenuItem mntmAvailableVehicles = new JMenuItem("Available Vehicles");
 		mntmAvailableVehicles.addActionListener(e -> {
-			// DO stuff
 			// Complete list, pull availableVehicle for each location
-			availableV(tblLocations, locationList);
+			availableV(locationList);
 		});
 		mnQueries.add(mntmAvailableVehicles);
 
@@ -129,16 +147,13 @@ public class RentalManagementApp {
 	}
 
 	private void newLocation(List<RentalLocations> list) {
-//		JFrame frmNewLocation = new JFrame("New Location");
-//		frmNewLocation.setSize(new Dimension(500, 300));
 
 		JPanel pnlNewLocation = new JPanel(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = (GridBagConstraints.HORIZONTAL);
 		c.ipadx = 5;
 		c.ipady = 10;
-//		frmNewLocation.add(pnlNewLocation);
-
+		
 		JLabel lblName = new JLabel("Location Name:");
 		c.gridx = 0;
 		c.gridy = 0;
@@ -154,22 +169,6 @@ public class RentalManagementApp {
 		c.gridx = 2;
 		c.gridy = 0;
 		pnlNewLocation.add(lblNameErr, c);
-
-//		JLabel lblRate = new JLabel("Rental Rate:");
-//		c.gridx = 0;
-//		c.gridy = 1;
-//		pnlNewLocation.add(lblRate, c);
-//		
-//		JTextField txtRate = new JTextField(20);
-//		c.gridx = 1;
-//		c.gridy = 1;
-//		pnlNewLocation.add(txtRate, c);
-//		
-//		JLabel lblRateErr = new JLabel();
-//		lblRateErr.setForeground(Color.RED);
-//		c.gridx = 2;
-//		c.gridy = 1;
-//		pnlNewLocation.add(lblRateErr, c);
 
 		JLabel lblVehicles = new JLabel("# of Rented Vehicles:");
 		c.gridx = 0;
@@ -208,7 +207,6 @@ public class RentalManagementApp {
 
 		if (result == 0) {
 			String name = txtName.getText();
-			// double rate = Double.parseDouble(txtRate.getText());
 			int vehicles = Integer.parseInt(txtVehicle.getText());
 			int id = locationList.size() + 1;
 			int zip = Integer.parseInt(txtZip.getText());
@@ -237,7 +235,7 @@ public class RentalManagementApp {
 		table.setModel(dtm);
 	}
 
-	private void availableV(JTable table, List<RentalLocations> list) {
+	private void availableV(List<RentalLocations> list) {
 		String[] columns = { "ID", "Name", "Available Vehicles" };
 		Object[][] data = new Object[list.size()][3];
 
@@ -247,16 +245,15 @@ public class RentalManagementApp {
 			data[i][2] = list.get(i).availableVehicles();
 		}
 		DefaultTableModel dtm = new DefaultTableModel(data, columns);
-		table.setModel(dtm);
+		tblLocations.setModel(dtm);
 	}
 
 	private void ratesByLoc(List<RentalLocations> list) {
 		String name = JOptionPane.showInputDialog(frmRentalLocationManager, "Input location name");
-		updateTable(tblLocations, locationList, name);
+		filterLocationsByName(locationList, name);
 	}
-	//Overloaded for location name input
-	private void updateTable(JTable table, List<RentalLocations> list, String name) {
-		String[] columns = { "ID", "Name", "ZIP Code", "Rented Vehicles", "Avail. Vehicles", "Daily Rate" };
+	
+	private void filterLocationsByName(List<RentalLocations> list, String name) {
 		List<RentalLocations> locs = new ArrayList<>();
 		
 		for (RentalLocations r : list) {
@@ -265,16 +262,31 @@ public class RentalManagementApp {
 			}
 		}
 		
-		Object[][] data = new Object[locs.size()][6];
-		for (int i = 0; i < locs.size(); i++) {
-			data[i][0] = locs.get(i).getId();
-			data[i][1] = locs.get(i).getName();
-			data[i][2] = locs.get(i).getZip();
-			data[i][3] = locs.get(i).getRentedVehicles();
-			data[i][4] = locs.get(i).availableVehicles();
-			data[i][5] = locs.get(i).getRates();
+		updateTable(tblLocations, locs);
+	}
+	
+	private void saveData(List<RentalLocations> list) {
+		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("locations.data"))) {
+			oos.writeObject(list);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		DefaultTableModel dtm = new DefaultTableModel(data, columns);
-		table.setModel(dtm);
+	}
+	
+	@SuppressWarnings("unchecked")
+	private ArrayList<RentalLocations> loadData() {
+		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("locations.data"))) {
+			ArrayList<RentalLocations> list = (ArrayList<RentalLocations>)ois.readObject();
+			return list;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return new ArrayList<RentalLocations>();
 	}
 }

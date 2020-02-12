@@ -1,10 +1,13 @@
-package IJS_Sprint1;
+package ijs_sprint1;
 
+import java.io.Serializable;
 //import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RentalLocations {
+public class RentalLocations implements Serializable {
+	
+	private static final long serialVersionUID = 8743507069010815384L;
 	private String name; // rental location name,cities for locations
 	private int id;
 
