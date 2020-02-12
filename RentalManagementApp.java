@@ -101,4 +101,22 @@ public class RentalManagementApp {
 		JMenuItem mntmDailyRevenueFor = new JMenuItem("Daily Revenue for Location");
 		mnCalculate.add(mntmDailyRevenueFor);
 	}
+		//gets the rental rate given a name
+	private static void locRates(String name, List<RentalLocations> rL) {
+		for(RentalLocations list : rL) {
+			if(list.getName() == (name)) {
+				System.out.println("Zone:" + name + " " + list.getRentalRate());
+			}
+		}
+	}
+	
+	//gets the details when given a location name
+	private static void locDetails(String name, List<RentalLocations> rL) {//name of city desired
+		for(RentalLocations list: rL) {
+			if(list.getName() == name) {
+				System.out.println(list.toString());
+			}
+		}
+	}
+}
 }
