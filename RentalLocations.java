@@ -1,7 +1,6 @@
 package ijs_sprint1;
 
 import java.io.Serializable;
-//import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +15,7 @@ public class RentalLocations implements Serializable {
 
 	private double dailyRate;
 	private int zip;
-	// private double discount;
+
 
 	// total vehicles = 50
 	public RentalLocations(String name, int rentedVehicles, int id, int zip) {
@@ -47,18 +46,6 @@ public class RentalLocations implements Serializable {
 	public void setZip(int zip) {
 		this.zip = zip;
 	}
-
-	/**
-	 * @return the discount
-	 */
-	/*
-	 * public double getDiscount() { return discount; }
-	 * 
-	 *//**
-		 * @param discount the discount to set
-		 *//*
-			 * public void setDiscount(double discount) { this.discount = discount; }
-			 */
 
 	public int getVehicles() {
 		return vehicles;
@@ -98,13 +85,6 @@ public class RentalLocations implements Serializable {
 		this.dailyRate = dailyRate;
 	}
 
-	/*
-	 * JEFF LOOK HERE FOR LOGIC Scanner sc = new Scanner(System.in);
-	 * System.out.println("how many days would you like to rent a vehicle?"); days =
-	 * sc.nextInt(); System.out.println("Please input zip of rental location: ");
-	 * zip = sc.nextInt();
-	 */
-
 	public double getRates() {
 		if ((zip >= 98001) && (zip <= 98100)) {
 			dailyRate = 27.50;
@@ -122,14 +102,8 @@ public class RentalLocations implements Serializable {
 		return dailyRate;
 	}
 
-	// Total time
-
 	public double total() {
-		/*
-		 * double total = rentedVehicles * dailyRate; //May
-		 * System.out.println("the total is: " +
-		 * NumberFormat.getCurrencyInstance().format(total));
-		 */
+		
 		return rentedVehicles * dailyRate;
 	}
 
