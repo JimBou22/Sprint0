@@ -1,4 +1,4 @@
-package ijs_sprint1;
+package IJS_Sprint1;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -135,7 +135,7 @@ public class RentalManagementApp {
 		JMenuItem mntmByLocationName = new JMenuItem("by Location Name");
 		mntmByLocationName.addActionListener(e -> {
 			// Filter rates by a certain Location Name
-			updateTable(Queries.ratesByLoc(locationList));
+			tblLocations.setModel(Queries.ratesByLoc(locationList));
 			
 		});
 		mnLookupRentalRates.add(mntmByLocationName);
