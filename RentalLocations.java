@@ -1,6 +1,8 @@
 package IJS_Sprint1;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RentalLocations {
 	private String name; // rental location name,cities for locations
