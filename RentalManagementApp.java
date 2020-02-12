@@ -1,4 +1,4 @@
-package IJS_Sprint1;
+package ijs_sprint1;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -27,6 +27,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JButton;
 
 public class RentalManagementApp {
 
@@ -72,6 +73,12 @@ public class RentalManagementApp {
 
 		tblLocations = new JTable();
 		scrollPane.setViewportView(tblLocations);
+		
+		JButton btnResetView = new JButton("Reset View");
+		btnResetView.addActionListener(e -> {
+			updateTable(locationList);
+		});
+		frmRentalLocationManager.getContentPane().add(btnResetView, BorderLayout.SOUTH);
 
 		JMenuBar menuBar = new JMenuBar();
 		frmRentalLocationManager.setJMenuBar(menuBar);
@@ -226,19 +233,52 @@ public class RentalManagementApp {
 		c.gridy = 3;
 		pnlNewLocation.add(lblZipErr, c);
 
-		int result = JOptionPane.showOptionDialog(null, new Object[] { pnlNewLocation }, "New Location",
-				JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+		boolean complete = false;
+		while (!complete) {
+			
+			int result = JOptionPane.showOptionDialog(null, new Object[] { pnlNewLocation }, "New Location",
+					JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 
-		if (result == 0) {
-			String name = txtName.getText();
-			int vehicles = Integer.parseInt(txtVehicle.getText());
-			int id = locationList.size() + 1;
-			int zip = Integer.parseInt(txtZip.getText());
+			if (result == 0) {
+				
+				String nameIn = txtName.getText();
+				String rentedVehiclesIn = txtVehicle.getText();
+				String zipIn = txtZip.getText();
+				complete = true;
+				int rentedVehicles = 0, zip = 0;
+				
+				lblNameErr.setText("");
+				lblVehiclesErr.setText("");
+				lblZipErr.setText("");
+				
+				if (nameIn.length() < 6 || nameIn.length() > 20) {
+					lblNameErr.setText("* Must be between 6 and 20 characters");
+					complete = false;
+				}
+				
+				try {
+					rentedVehicles = Integer.parseInt(rentedVehiclesIn); 
+				} catch (NumberFormatException ex) {
+					lblVehiclesErr.setText("* Must be a number");
+					complete = false;
+				}
+				
+				try {
+					zip = Integer.parseInt(zipIn);
+				} catch (NumberFormatException ex) {
+					lblZipErr.setText("* Must be a number");
+					complete = false;
+				}
+				
+				if (!complete) continue;
 
-			RentalLocations loc = new RentalLocations(name, vehicles, id, zip);
+				RentalLocations loc = new RentalLocations(nameIn, rentedVehicles, locationList.size() + 1, zip);
 
-			list.add(loc);
-			updateTable(locationList);
+				list.add(loc);
+				updateTable(locationList);
+			} else {
+				complete = true;
+			}
 		}
 	}
 
