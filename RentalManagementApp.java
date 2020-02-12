@@ -274,10 +274,10 @@ public class RentalManagementApp {
 		String[] columns = { "ID", "Name", "Daily Rate" };
 		Object[][] data = new Object[list.size()][3];
 
-		for (int i = 0; i < list.size(); i++) {
-			data[i][0] = list.get(i).getId();
-			data[i][1] = list.get(i).getName();
-			data[i][2] = list.get(i).getRates();
+		for (int i = 0; i < locs.size(); i++) {
+			data[i][0] = locs.get(i).getId();
+			data[i][1] = locs.get(i).getName();
+			data[i][2] = locs.get(i).getRates();
 		}
 		DefaultTableModel dtm = new DefaultTableModel(data, columns);
 		tblLocations.setModel(dtm);
