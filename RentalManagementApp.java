@@ -105,7 +105,7 @@ public class RentalManagementApp {
 	private static void locRates(String name, List<RentalLocations> rL) {
 		for(RentalLocations list : rL) {
 			if(list.getName() == (name)) {
-				System.out.println("Zone:" + name + " " + list.getRentalRate());
+				System.out.println("Name:" + name + " " + list.getRentalRate());
 			}
 		}
 	}
