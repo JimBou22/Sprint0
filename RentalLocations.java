@@ -13,7 +13,7 @@ public class RentalLocations {
 
 	private double dailyRate;
 	private int zip;
-	private double discount;
+//	private double discount;   will be an added feature in next iteration
 
 	// total vehicles = 50
 	public RentalLocations(String name, double dailyRate, int rentedVehicles, int id, int zip) {
@@ -47,17 +47,17 @@ public class RentalLocations {
 
 	/**
 	 * @return the discount
-	 */
-	public double getDiscount() {
-		return discount;
-	}
+//	 */
+//	public double getDiscount() {    will be an added feature
+//		return discount;
+//	}
 
 	/**
 	 * @param discount the discount to set
 	 */
-	public void setDiscount(double discount) {
-		this.discount = discount;
-	}
+//	public void setDiscount(double discount) {  will be an added feature
+//		this.discount = discount;
+//	}
 
 	public int getVehicles() {
 		return vehicles;
@@ -118,7 +118,7 @@ public class RentalLocations {
 			dailyRate = 12.25;
 		}
 
-		double total = rentedVehicles * dailyRate; //May 
+		double total = rentedVehicles * dailyRate; 
 		System.out.println("the total is: " + NumberFormat.getCurrencyInstance().format(total));
 		return total;
 //		
