@@ -13,6 +13,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -122,6 +123,9 @@ public class RentalManagementApp {
 
 		JMenuItem mntmByName = new JMenuItem("by Name");
 		mnLookupLocations.add(mntmByName);
+		mntmByName.addActionListener(e -> {
+			detailsByLoc(locationList);
+		});
 
 		JMenu mnQueries = new JMenu("Queries");
 		menuBar.add(mnQueries);
@@ -145,9 +149,14 @@ public class RentalManagementApp {
 
 		JMenu mnCalculate = new JMenu("Calculate");
 		menuBar.add(mnCalculate);
-
+		
 		JMenuItem mntmDailyRevenueFor = new JMenuItem("Daily Revenue for Location");
 		mnCalculate.add(mntmDailyRevenueFor);
+		mntmDailyRevenueFor.addActionListener(e ->{
+			//make the calculation
+			calculateRevenue(locationList);
+		});
+
 	}
 
 	private void newLocation(List<RentalLocations> list) {
@@ -254,7 +263,24 @@ public class RentalManagementApp {
 
 	private void ratesByLoc(List<RentalLocations> list) {
 		String name = JOptionPane.showInputDialog(frmRentalLocationManager, "Input location name");
-		filterLocationsByName(locationList, name);
+		List<RentalLocations> locs = new ArrayList<>();
+		
+		for (RentalLocations r : list) {
+			if (r.getName().contentEquals(name)) {
+				locs.add(r);
+			}
+		}
+		
+		String[] columns = { "ID", "Name", "Daily Rate" };
+		Object[][] data = new Object[list.size()][3];
+
+		for (int i = 0; i < list.size(); i++) {
+			data[i][0] = list.get(i).getId();
+			data[i][1] = list.get(i).getName();
+			data[i][2] = list.get(i).getRates();
+		}
+		DefaultTableModel dtm = new DefaultTableModel(data, columns);
+		tblLocations.setModel(dtm);
 	}
 	
 	private void filterLocationsByName(List<RentalLocations> list, String name) {
@@ -312,5 +338,24 @@ public class RentalManagementApp {
 		}
 		DefaultTableModel dtm = new DefaultTableModel(data, columns);
 		table.setModel(dtm);
+	}
+	
+	
+	private void detailsByLoc(List<RentalLocations> list) {
+		String name = JOptionPane.showInputDialog(frmRentalLocationManager, "Input location name");
+		filterLocationsByName(locationList, name);
+	}
+	
+	private void calculateRevenue(List<RentalLocations> list) {
+		String[] columns = { "ID", "Name", "Total Revenue" };
+		Object[][] data = new Object[list.size()][3];
+
+		for (int i = 0; i < list.size(); i++) {
+			data[i][0] = list.get(i).getId();
+			data[i][1] = list.get(i).getName();
+			data[i][2] = NumberFormat.getCurrencyInstance().format(list.get(i).total());
+		}
+		DefaultTableModel dtm = new DefaultTableModel(data, columns);
+		tblLocations.setModel(dtm);
 	}
 }
