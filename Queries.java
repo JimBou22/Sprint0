@@ -1,4 +1,4 @@
-package ijs_sprint1;
+package IJS_Sprint1;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -22,9 +22,26 @@ public class Queries {
 		return dtm;
 	}
 
-	public static ArrayList<RentalLocations> ratesByLoc(List<RentalLocations> list) {
+	public static DefaultTableModel ratesByLoc(List<RentalLocations> list) {
 		String name = JOptionPane.showInputDialog(null, "Input location name");
-		return filterLocationsByName(list, name);
+		List<RentalLocations> locs = new ArrayList<>();
+		
+		for (RentalLocations r : list) {
+			if (r.getName().contentEquals(name)) {
+				locs.add(r);
+			}
+		}
+		
+		String[] columns = { "ID", "Name", "Daily Rate" };
+		Object[][] data = new Object[locs.size()][3];
+
+		for (int i = 0; i < locs.size(); i++) {
+			data[i][0] = locs.get(i).getId();
+			data[i][1] = locs.get(i).getName();
+			data[i][2] = locs.get(i).getRates();
+		}
+		DefaultTableModel dtm = new DefaultTableModel(data, columns);
+		return dtm;
 	}
 	
 	public static ArrayList<RentalLocations> filterLocationsByName(List<RentalLocations> list, String name) {
