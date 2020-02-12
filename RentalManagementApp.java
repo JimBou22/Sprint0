@@ -122,9 +122,17 @@ public class RentalManagementApp {
 
 		JMenuItem mntmByZipCode = new JMenuItem("by ZIP Code");
 		mnLookupLocations.add(mntmByZipCode);
+		mntmByZipCode.addActionListener(e ->{
+			tblLocations.setModel(Queries.locsByZip(locationList,frmRentalLocationManager));
+		});
 
 		JMenuItem mntmByName = new JMenuItem("by Name");
 		mnLookupLocations.add(mntmByName);
+		mntmByName.addActionListener(e -> {
+			// Filter rates by a certain Location Name
+			updateTable(Queries.detailsByLoc(locationList));
+
+		});
 
 		JMenu mnQueries = new JMenu("Queries");
 		menuBar.add(mnQueries);
