@@ -118,9 +118,19 @@ public class RentalLocations {
 
 		double total = rentedVehicles * dailyRate; //May 
 		System.out.println("the total is: " + NumberFormat.getCurrencyInstance().format(total));
-		return dailyRate;
+		return total;
 //		
 //		}
 
+	}
+	//Returns list of location names given zipcode
+	public List<String> getLocs(int zip, List<RentalLocations> r){
+		List<String> list = new ArrayList<String>();
+		for(RentalLocations loc:r) {
+			if(loc.getZip() == zip) {
+				list.add(loc.getName());
+			}
+		}
+		return list;
 	}
 }
