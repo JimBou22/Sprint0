@@ -11,7 +11,7 @@ public class Main {
 	
 	}
 	
-	//gets the rental rate give a 
+	//gets the rental rate given a name
 	private static void locRates(String name, List<RentalLocations> rL) {
 		for(RentalLocations list : rL) {
 			if(list.getName() == (name)) {
