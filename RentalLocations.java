@@ -13,7 +13,7 @@ public class RentalLocations {
 
 	private double dailyRate;
 	private int zip;
-//	private double discount;   will be an added feature in next iteration
+	private double discount;
 
 	// total vehicles = 50
 	public RentalLocations(String name, double dailyRate, int rentedVehicles, int id, int zip) {
@@ -47,17 +47,17 @@ public class RentalLocations {
 
 	/**
 	 * @return the discount
-//	 */
-//	public double getDiscount() {    will be an added feature
-//		return discount;
-//	}
+	 */
+	public double getDiscount() {
+		return discount;
+	}
 
 	/**
 	 * @param discount the discount to set
 	 */
-//	public void setDiscount(double discount) {  will be an added feature
-//		this.discount = discount;
-//	}
+	public void setDiscount(double discount) {
+		this.discount = discount;
+	}
 
 	public int getVehicles() {
 		return vehicles;
@@ -118,7 +118,7 @@ public class RentalLocations {
 			dailyRate = 12.25;
 		}
 
-		double total = rentedVehicles * dailyRate; 
+		double total = rentedVehicles * dailyRate; //May 
 		System.out.println("the total is: " + NumberFormat.getCurrencyInstance().format(total));
 		return total;
 //		
@@ -135,4 +135,23 @@ public class RentalLocations {
 		}
 		return list;
 	}
+	//gets the rental rate given a name
+	public void locRates(String name, List<RentalLocations> rL) {
+		for(RentalLocations list : rL) {
+			if(list.getName() == (name)) {
+				System.out.println("Name:" + name + " " + list.getDailyRate()); //Needs to be edited based on GUI
+			}
+		}
+	}
+	
+	//gets the details when given a location name
+	public void locDetails(String name, List<RentalLocations> rL) {//name of city desired
+		for(RentalLocations list: rL) {
+			if(list.getName() == name) {
+				System.out.println(list.toString()); //needs to be edited based on GUI
+			}
+		}
+	}
 }
+
+
