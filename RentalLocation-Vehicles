@@ -13,6 +13,9 @@ public class RentalLocations {
 	public void setRentedVehicles(int rentedVehicles) {
 		this.rentedVehicles = rentedVehicles;
 	}
+	public int availableVehicles() {
+		return vehicles - rentedVehicles;
+	}
 	
 
 }
