@@ -98,6 +98,24 @@ public class RentalLocations implements Serializable {
 		if ((zip >= 98301) && (zip <= 98400)) {
 			dailyRate = 12.25;
 		}
+		if ((zip >= 98401) && (zip <= 98500)) {
+			dailyRate = 75.24;
+		}
+		if ((zip >= 98501) && (zip <= 98600)) {
+			dailyRate = 34.99;
+		}
+		if ((zip >= 98601) && (zip <= 98700)) {
+			dailyRate = 28.99;
+		}
+		if ((zip >= 98701) && (zip <= 98800)) {
+			dailyRate = 33.00;
+		}
+		if ((zip >= 98801) && (zip <= 98900)) {
+			dailyRate = 19.99;
+		}
+		if ((zip >= 98901) && (zip <= 99000)) {
+			dailyRate = 9.99;
+		}
 
 		return dailyRate;
 	}
