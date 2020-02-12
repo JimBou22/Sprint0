@@ -1,6 +1,6 @@
 package IJS_Sprint1;
 
-import java.text.NumberFormat;
+//import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,15 +13,15 @@ public class RentalLocations {
 
 	private double dailyRate;
 	private int zip;
-	private double discount;
+	// private double discount;
 
 	// total vehicles = 50
-	public RentalLocations(String name, double dailyRate, int rentedVehicles, int id, int zip) {
+	public RentalLocations(String name, int rentedVehicles, int id, int zip) {
 		this.name = name;
-		this.dailyRate = dailyRate;
 		this.rentedVehicles = rentedVehicles;
 		this.id = id;
 		this.zip = zip;
+		this.dailyRate = getRates(); // sets daily rate based on zip
 	}
 
 	/**
@@ -48,16 +48,14 @@ public class RentalLocations {
 	/**
 	 * @return the discount
 	 */
-	public double getDiscount() {
-		return discount;
-	}
-
-	/**
-	 * @param discount the discount to set
-	 */
-	public void setDiscount(double discount) {
-		this.discount = discount;
-	}
+	/*
+	 * public double getDiscount() { return discount; }
+	 * 
+	 *//**
+		 * @param discount the discount to set
+		 *//*
+			 * public void setDiscount(double discount) { this.discount = discount; }
+			 */
 
 	public int getVehicles() {
 		return vehicles;
@@ -104,7 +102,7 @@ public class RentalLocations {
 	 * zip = sc.nextInt();
 	 */
 
-	public double getRates(double dailyRate) {
+	public double getRates() {
 		if ((zip >= 98001) && (zip <= 98100)) {
 			dailyRate = 27.50;
 		}
@@ -118,40 +116,46 @@ public class RentalLocations {
 			dailyRate = 12.25;
 		}
 
-		double total = rentedVehicles * dailyRate; //May 
-		System.out.println("the total is: " + NumberFormat.getCurrencyInstance().format(total));
-		return total;
-//		
-//		}
-
+		return dailyRate;
 	}
-	//Returns list of location names given zipcode
-	public List<String> getLocs(int zip, List<RentalLocations> r){
+
+	// Total time
+
+	public double total() {
+		/*
+		 * double total = rentedVehicles * dailyRate; //May
+		 * System.out.println("the total is: " +
+		 * NumberFormat.getCurrencyInstance().format(total));
+		 */
+		return rentedVehicles * dailyRate;
+	}
+
+	// Returns list of location names given zipcode
+	public List<String> getLocs(int zip, List<RentalLocations> r) {
 		List<String> list = new ArrayList<String>();
-		for(RentalLocations loc:r) {
-			if(loc.getZip() == zip) {
+		for (RentalLocations loc : r) {
+			if (loc.getZip() == zip) {
 				list.add(loc.getName());
 			}
 		}
 		return list;
 	}
-	//gets the rental rate given a name
+
+	// gets the rental rate given a name
 	public void locRates(String name, List<RentalLocations> rL) {
-		for(RentalLocations list : rL) {
-			if(list.getName() == (name)) {
-				System.out.println("Name:" + name + " " + list.getDailyRate()); //Needs to be edited based on GUI
+		for (RentalLocations list : rL) {
+			if (list.getName() == (name)) {
+				System.out.println("Name:" + name + " " + list.getDailyRate()); // Needs to be edited based on GUI
 			}
 		}
 	}
-	
-	//gets the details when given a location name
-	public void locDetails(String name, List<RentalLocations> rL) {//name of city desired
-		for(RentalLocations list: rL) {
-			if(list.getName() == name) {
-				System.out.println(list.toString()); //needs to be edited based on GUI
+
+	// gets the details when given a location name
+	public void locDetails(String name, List<RentalLocations> rL) {// name of city desired
+		for (RentalLocations list : rL) {
+			if (list.getName() == name) {
+				System.out.println(list.toString()); // needs to be edited based on GUI
 			}
 		}
 	}
 }
-
-
