@@ -22,7 +22,7 @@ public class RentalLocations {
 //	}
 //	public static double getRates(double dailyRate) { 
 		if ((days > 0) && (days < 5)) {
-			if ((zip >= 98001) && (zip <= 98100)) {
+			if ((zip >= 95001) && (zip <= 98100)) {
 				dailyRate = 27.50;				
 			}
 			if ((zip >= 98201) && (zip <= 98300)) {
@@ -31,7 +31,7 @@ public class RentalLocations {
 			if ((zip >= 98301) && (zip <= 98400)) {
 				dailyRate = 31.00;
 			}
-			if ((zip >= 98401) && (zip <= 98500)) {
+			if ((zip >= 98401) && (zip <= 99500)) {
 				dailyRate = 12.25;
 			}
 		}
