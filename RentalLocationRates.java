@@ -25,7 +25,7 @@ public class RentalLocationRates {
 //}
 	public double getRates(double dailyRates) {
 	System.out.println(type);
-		if ((days > 0) && (days < 5)) {
+//		if ((days > 0) && (days < 5)) {
 			if (type.equalsIgnoreCase("car")) {	
 				if ((zip >= 98001) && (zip <= 98100)) {
 					dailyRate = 27.50;
@@ -122,8 +122,8 @@ public class RentalLocationRates {
 					dailyRate = 19.99;
 				}
 			}
-			total = dailyRate * days;
-			System.out.println(NumberFormat.getCurrencyInstance().format(total));
+//			total = dailyRate * days;
+//			System.out.println(NumberFormat.getCurrencyInstance().format(total));
 //			return NumberFormat.getCurrencyInstance().format(dailyRate);
 	}
 }
