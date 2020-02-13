@@ -136,21 +136,15 @@ public class RentalLocations implements Serializable {
 		return list;
 	}
 
-	// gets the rental rate given a name
-	public void locRates(String name, List<RentalLocations> rL) {
-		for (RentalLocations list : rL) {
-			if (list.getName() == (name)) {
-				System.out.println("Name:" + name + " " + list.getDailyRate()); // Needs to be edited based on GUI
-			}
-		}
-	}
-
-	// gets the details when given a location name
-	public void locDetails(String name, List<RentalLocations> rL) {// name of city desired
-		for (RentalLocations list : rL) {
-			if (list.getName() == name) {
-				System.out.println(list.toString()); // needs to be edited based on GUI
-			}
-		}
-	}
+	/*
+	 * // gets the rental rate given a name public void locRates(String name,
+	 * List<RentalLocations> rL) { for (RentalLocations list : rL) { if
+	 * (list.getName() == (name)) { System.out.println("Name:" + name + " " +
+	 * list.getDailyRate()); // Needs to be edited based on GUI } } }
+	 * 
+	 * // gets the details when given a location name public void locDetails(String
+	 * name, List<RentalLocations> rL) {// name of city desired for (RentalLocations
+	 * list : rL) { if (list.getName() == name) {
+	 * System.out.println(list.toString()); // needs to be edited based on GUI } } }
+	 */
 }
