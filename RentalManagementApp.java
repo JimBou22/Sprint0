@@ -353,7 +353,7 @@ public class RentalManagementApp {
 			data[i][2] = list.get(i).getZip();
 			data[i][3] = list.get(i).getRentedVehicles();
 			data[i][4] = list.get(i).availableVehicles();
-			data[i][5] = list.get(i).getRates();
+			data[i][5] = String.format("$%.2f", list.get(i).getRates());
 		}
 
 		DefaultTableModel dtm = new DefaultTableModel(data, columns);
