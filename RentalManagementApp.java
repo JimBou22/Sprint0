@@ -3,6 +3,7 @@ package ijs_sprint1;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -16,6 +17,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -26,8 +28,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.JButton;
 
 public class RentalManagementApp {
 
@@ -63,30 +65,40 @@ public class RentalManagementApp {
 	 */
 	private void initialize() {
 		
+		UIManager.getLookAndFeelDefaults().put("defaultFont", new Font("Arial", Font.BOLD, 20));
+		
 		frmRentalLocationManager = new JFrame();
+		frmRentalLocationManager.getContentPane().setFont(new Font("Tahoma", Font.PLAIN, 22));
 		frmRentalLocationManager.setTitle("Rental Location Manager");
 		frmRentalLocationManager.setBounds(100, 100, 800, 500);
 		frmRentalLocationManager.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		frmRentalLocationManager.getContentPane().add(scrollPane, BorderLayout.CENTER);
 
 		tblLocations = new JTable();
+		tblLocations.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		tblLocations.setRowHeight(30);
 		scrollPane.setViewportView(tblLocations);
 		
 		JButton btnResetView = new JButton("Reset View");
+		btnResetView.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		btnResetView.addActionListener(e -> {
 			updateTable(locationList);
 		});
 		frmRentalLocationManager.getContentPane().add(btnResetView, BorderLayout.SOUTH);
 
 		JMenuBar menuBar = new JMenuBar();
+		menuBar.setFont(new Font("Segoe UI", Font.PLAIN, 22));
 		frmRentalLocationManager.setJMenuBar(menuBar);
 
 		JMenu mnFile = new JMenu("File");
+		mnFile.setFont(new Font("Segoe UI", Font.PLAIN, 22));
 		menuBar.add(mnFile);
 		
 		JMenuItem mntmSave = new JMenuItem("Save");
+		mntmSave.setFont(new Font("Segoe UI", Font.PLAIN, 22));
 		mntmSave.addActionListener(e -> {
 			if (saveData(locationList)) {
 				JOptionPane.showMessageDialog(frmRentalLocationManager, "Data saved successfully!", "Save", JOptionPane.INFORMATION_MESSAGE);
@@ -95,6 +107,7 @@ public class RentalManagementApp {
 		mnFile.add(mntmSave);
 		
 		JMenuItem mntmLoad = new JMenuItem("Load");
+		mntmLoad.setFont(new Font("Segoe UI", Font.PLAIN, 22));
 		mntmLoad.addActionListener(e -> {
 			locationList = loadData();
 			updateTable(locationList);
@@ -102,6 +115,7 @@ public class RentalManagementApp {
 		mnFile.add(mntmLoad);
 		
 		JMenuItem mntmExit = new JMenuItem("Exit");
+		mntmExit.setFont(new Font("Segoe UI", Font.PLAIN, 22));
 		mntmExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				JOptionPane.showMessageDialog(frmRentalLocationManager, "See ya!");
@@ -111,9 +125,11 @@ public class RentalManagementApp {
 		mnFile.add(mntmExit);
 
 		JMenu mnLocation = new JMenu("Location");
+		mnLocation.setFont(new Font("Segoe UI", Font.PLAIN, 22));
 		menuBar.add(mnLocation);
 
 		JMenuItem mntmNewLocation = new JMenuItem("New Location");
+		mntmNewLocation.setFont(new Font("Segoe UI", Font.PLAIN, 22));
 		mntmNewLocation.addActionListener(e -> {
 			newLocation(locationList);
 		});
@@ -123,17 +139,54 @@ public class RentalManagementApp {
 		mntmDeleteLocation.addActionListener(e -> {
 			
 		});
+		
+		JMenuItem mntmDeleteLocation_1 = new JMenuItem("Delete Location");
+		mntmDeleteLocation_1.addActionListener(e -> {
+			boolean success = false;
+			while (!success) {
+				int id = 0;
+				
+				try {
+					String idIn = JOptionPane.showInputDialog(
+							frmRentalLocationManager, "Enter ID of location to delete:", "Delete Location", JOptionPane.QUESTION_MESSAGE);
+					if (idIn == null) break;
+					id = Integer.parseInt(idIn);
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(frmRentalLocationManager, "ID must be a number", "Invalid ID", JOptionPane.ERROR_MESSAGE);
+					continue;
+				}
+				
+				boolean locFound = false;
+				for (RentalLocations rl : locationList) {
+					if (rl.getId() == id) {
+						locationList.remove(rl);
+						updateTable(locationList);
+						success = true;
+						locFound = true;
+						break;
+					}
+				}
+				if (locFound) break;
+				
+				JOptionPane.showMessageDialog(frmRentalLocationManager, "Location not found.\nPlease check the ID.", "Location Not Found", JOptionPane.ERROR_MESSAGE);
+			}
+		});
+		mntmDeleteLocation_1.setFont(new Font("Segoe UI", Font.PLAIN, 22));
+		mnLocation.add(mntmDeleteLocation_1);
 
 		JMenu mnLookupLocations = new JMenu("Lookup Locations");
+		mnLookupLocations.setFont(new Font("Segoe UI", Font.PLAIN, 22));
 		mnLocation.add(mnLookupLocations);
 
 		JMenuItem mntmByZipCode = new JMenuItem("by ZIP Code");
+		mntmByZipCode.setFont(new Font("Segoe UI", Font.PLAIN, 22));
 		mnLookupLocations.add(mntmByZipCode);
 		mntmByZipCode.addActionListener(e ->{
 			tblLocations.setModel(Queries.locsByZip(locationList,frmRentalLocationManager));
 		});
 
 		JMenuItem mntmByName = new JMenuItem("by Name");
+		mntmByName.setFont(new Font("Segoe UI", Font.PLAIN, 22));
 		mnLookupLocations.add(mntmByName);
 		mntmByName.addActionListener(e -> {
 			// Filter rates by a certain Location Name
@@ -142,12 +195,15 @@ public class RentalManagementApp {
 		});
 
 		JMenu mnQueries = new JMenu("Queries");
+		mnQueries.setFont(new Font("Segoe UI", Font.PLAIN, 22));
 		menuBar.add(mnQueries);
 
 		JMenu mnLookupRentalRates = new JMenu("Lookup Rental Rates");
+		mnLookupRentalRates.setFont(new Font("Segoe UI", Font.PLAIN, 22));
 		mnQueries.add(mnLookupRentalRates);
 
 		JMenuItem mntmByLocationName = new JMenuItem("by Location Name");
+		mntmByLocationName.setFont(new Font("Segoe UI", Font.PLAIN, 22));
 		mntmByLocationName.addActionListener(e -> {
 			// Filter rates by a certain Location Name
 			tblLocations.setModel(Queries.ratesByLoc(locationList));
@@ -156,6 +212,7 @@ public class RentalManagementApp {
 		mnLookupRentalRates.add(mntmByLocationName);
 
 		JMenuItem mntmAvailableVehicles = new JMenuItem("Available Vehicles");
+		mntmAvailableVehicles.setFont(new Font("Segoe UI", Font.PLAIN, 22));
 		mntmAvailableVehicles.addActionListener(e -> {
 			// Complete list, pull availableVehicle for each location
 			tblLocations.setModel(Queries.availableV(locationList));
@@ -163,9 +220,11 @@ public class RentalManagementApp {
 		mnQueries.add(mntmAvailableVehicles);
 
 		JMenu mnCalculate = new JMenu("Calculate");
+		mnCalculate.setFont(new Font("Segoe UI", Font.PLAIN, 22));
 		menuBar.add(mnCalculate);
 
 		JMenuItem mntmDailyRevenueFor = new JMenuItem("Daily Revenue for Location");
+		mntmDailyRevenueFor.setFont(new Font("Segoe UI", Font.PLAIN, 22));
 		mntmDailyRevenueFor.addActionListener(e -> {
 			tblLocations.setModel(Queries.calculateRevenue(locationList));
 		});
@@ -272,7 +331,9 @@ public class RentalManagementApp {
 				
 				if (!complete) continue;
 
-				RentalLocations loc = new RentalLocations(nameIn, rentedVehicles, locationList.size() + 1, zip);
+				int id = locationList.get(locationList.size() - 1).getId() + 1;
+				
+				RentalLocations loc = new RentalLocations(nameIn, rentedVehicles, id, zip);
 
 				list.add(loc);
 				updateTable(locationList);
