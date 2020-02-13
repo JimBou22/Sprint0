@@ -1,4 +1,5 @@
-package IJS_Sprint1;
+package ijs_sprint1;
+
 
 import java.awt.Component;
 import java.text.NumberFormat;

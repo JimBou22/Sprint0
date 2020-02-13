@@ -1,3 +1,4 @@
+package ijs_sprint1;
 
 public class Trailer {
 	int trailerId;

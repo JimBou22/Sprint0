@@ -1,4 +1,4 @@
-package Experiments;
+package ijs_sprint1;
 
 public class Vehicles {
 	private int vehicleId;
